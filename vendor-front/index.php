@@ -1,17 +1,16 @@
-<?
+<?php
 session_start();
 
 $error = '';
 
 if(isset($_SESSION['user_data']))
 {
-    header('location:profile.php');
+    header('location:chatpage.php');
 }
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     require_once('../database/ChatUser.php');
-    $user = new ChatUser();
-
+    $user = new ChatUser;
     $user->setEmail($_POST['email']);
 
     $user_data = $user->getUserDataFromEmail();
@@ -22,6 +21,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $user->setUserId($user_data['user_id']);
             $user->setStatus('Active');
+            $user_token = md5(uniqid());
+            $user->setUserToken($user_token);
+            if($user->update_user_login_data())
+            {
+                $_SESSION['user_data'][$user_data['user_id']] = [
+                    'id' => $user_data['user_id'],
+                    'name' => $user_data['first_name'].$user_data['last_name'],
+                    'fname' => $user_data['first_name'],
+                    'mname' => $user_data['middle_name'],
+                    'lname' => $user_data['last_name'],
+                    'profile' => $user_data['user_photo'],
+                    'token' => $user_token
+                ];
+                header('location:chatpage.php');
+            }
+            
         }
         else
         {
@@ -46,7 +61,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 <body>
     <div class="container">
         <h2 class="mt-5">Login</h2>
-        <form action="login.php" method="post">
+        <?php
+            if($error != '')
+            {
+                echo  '
+                <div class="alert alert-danger">
+                '.$error.'
+                </div>
+                ';
+            }
+        ?>
+        <form  method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="email" name="email" required>

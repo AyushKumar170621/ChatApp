@@ -1,7 +1,7 @@
 <?php
 
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 $error = '';
 $success_message = '';
@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     session_start();
     if(isset($_SESSION["user_data"]))
     {
-        header('location:profile.php');
+        header('location:chatpage.php');
     }
     require_once '../database/ChatUser.php';
     $user = new ChatUser();

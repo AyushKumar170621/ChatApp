@@ -1,0 +1,47 @@
+Array
+(
+    [user_id] => 2
+    [action] => leave
+)
+Array
+(
+)
+Request received: Array
+(
+)
+
+Response: Array
+(
+    [status] => 0
+    [message] => Invalid action or parameters
+)
+
+Request received: Array
+(
+    [user_id] => 2
+    [action] => leave
+)
+
+Request received: Array
+(
+    [user_id] => 2
+    [action] => leave
+)
+
+Request received: Array
+(
+    [user_id] => 2
+    [action] => leave
+)
+
+Request received: Array
+(
+    [user_id] => 1
+    [action] => leave
+)
+
+Response: Array
+(
+    [status] => 1
+)
+
